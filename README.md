@@ -19,6 +19,11 @@ pip install -U "uvicorn[standard]"
 docker build -t spacy-nlp-api .
 ```
 
+### Save
+```bash
+docker save spacy-nlp-api > spacy-nlp-api.tar
+```
+
 ### Run
 
 ```bash
