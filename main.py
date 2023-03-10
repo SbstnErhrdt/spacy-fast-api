@@ -1,7 +1,7 @@
 import os
 from typing import List
-
-from fastapi import FastAPI, HTTPException, Response
+import time
+from fastapi import FastAPI, HTTPException, Response, Request
 from fastapi.middleware.cors import CORSMiddleware
 import spacy
 import uvicorn
@@ -52,6 +52,15 @@ def predict(text: str):
     return res
 
 
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    response.headers["X-Process-Time"] = str(process_time)
+    return response
+
+
 @app.put("/", response_model=List[NerElement])
 async def handle_request(
         payload: TextRequest,
@@ -61,4 +70,4 @@ async def handle_request(
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000, workers=1)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
