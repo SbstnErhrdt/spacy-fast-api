@@ -24,6 +24,11 @@ docker build -t spacy-nlp-api .
 docker save spacy-nlp-api > spacy-nlp-api.tar
 ```
 
+### Load
+```bash
+docker load < spacy-nlp-api.tar
+```
+
 ### Run
 
 ```bash
