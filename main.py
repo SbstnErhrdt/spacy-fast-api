@@ -41,7 +41,7 @@ class NerElement(BaseModel):
 
 def predict(text: str):
     res = []
-    doc = nlp(text)
+    doc = nlp(text, disable=["tok2vec", "tagger", "parser", "attribute_ruler", "lemmatizer"])
     for ent in doc.ents:
         res.append({
             "text": ent.text,
